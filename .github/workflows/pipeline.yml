@@ -28,11 +28,8 @@ jobs:
           command: npm run test:e2e
           start: npm run start-prod
           wait-on: http://localhost:5001
-
-  render_deployment_pipeline:
-    runs-on: ubuntu-20.04
-    steps:
-      uses: sws2apps/render-deployment@v1.2.0
-      with:
-        serviceId: ${{ secrets.RENDER_SERVICE_ID }}
-        apiKey: ${{ secrets.RENDER_API_KEY }}
+      - name: Render Deployment
+        uses: sws2apps/render-deployment@v1.2.0
+        with:
+          serviceId: ${{ secrets.RENDER_SERVICE_ID }}
+          apiKey: ${{ secrets.RENDER_API_KEY }}
