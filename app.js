@@ -15,5 +15,7 @@ app.get('/health', (req, res) => {
 })
 
 app.listen(PORT, () => {
+  throw 'error...'
+  // eslint-disable-next-line no-unreachable
   console.log('server started on port 5001')
 })
