@@ -37,24 +37,6 @@ jobs:
         with:
           serviceId: ${{ secrets.RENDER_SERVICE_ID }}
           apiKey: ${{ secrets.RENDER_API_KEY }}
-
-  tag_release:
-    needs: [simple_deployment_pipeline]
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v3
-      - name: Bump version and push tag
-        if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip')}}
-        uses: anothrNick/github-tag-action@c360518
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DEFAULT_BUMP: patch
-  
-  notification:
-    needs: [tag_release]
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v3
       - name: Test Success
         uses: rjstone/discord-webhook-notify@v1
         if: success()
@@ -69,3 +51,15 @@ jobs:
             severity: error
             details: Test Failed!
             webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+
+  tag_release:
+    needs: [simple_deployment_pipeline]
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Bump version and push tag
+        if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip')}}
+        uses: anothrNick/github-tag-action@c360518fb8131e99795f8208f8a6105ceca55ec2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch
