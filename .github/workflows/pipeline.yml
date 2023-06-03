@@ -28,7 +28,7 @@ jobs:
           command: npm run test:e2e
           start: npm run start-prod
           wait-on: http://localhost:5001
-      - name: Render Deployment
+      - name: Deploy to Render
         uses: sws2apps/render-deployment@v1.2.0
         with:
           serviceId: ${{ secrets.RENDER_SERVICE_ID }}
